@@ -14,7 +14,7 @@ public class TestJaxb {
     public static void main(String[] args) {
         try {
             int maxThreads = 100;
-            int maxRequests = 1000;
+            int maxRequests = 2000;
 
             File inputFile = new File("test.xml");
             System.out.println("running " + maxRequests + " requests with " + maxThreads + " threads to test JAXBContext overhead");
@@ -28,10 +28,10 @@ public class TestJaxb {
             System.out.println("total time: " + String.format("%05d", singletonElapsedTime) + " ms (using global instance, singleton)");
 
             if (singletonElapsedTime < nonSingletonElapsedTime) {
-                System.out.println("++ summary: singleton is " + String.format("%03d", nonSingletonElapsedTime / singletonElapsedTime) + " times faster than non singleton");
+                System.out.println("++ summary: singleton is " + nonSingletonElapsedTime / singletonElapsedTime + " times faster than non singleton");
             }
             else {
-                System.out.println("++ summary: singleton is " + String.format("%03d", nonSingletonElapsedTime / singletonElapsedTime) + " times slower than non singleton");
+                System.out.println("++ summary: singleton is " + nonSingletonElapsedTime / singletonElapsedTime + " times slower than non singleton");
             }
 
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class TestJaxb {
             }
 
             executor.shutdown();
-            executor.awaitTermination(10, TimeUnit.SECONDS);
+            executor.awaitTermination(60, TimeUnit.SECONDS);
 
         } catch(Exception e) {
             e.printStackTrace();
@@ -71,7 +71,7 @@ public class TestJaxb {
             }
 
             executor.shutdown();
-            executor.awaitTermination(10, TimeUnit.SECONDS);
+            executor.awaitTermination(60, TimeUnit.SECONDS);
         } catch(Exception e) {
             e.printStackTrace();
         }
