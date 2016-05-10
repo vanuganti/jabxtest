@@ -9,12 +9,20 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.cli.*;
+
 
 public class TestJaxb {
+
     public static void main(String[] args) {
+
         try {
-            int maxThreads = 100;
-            int maxRequests = 2000;
+
+            OptionsParser optionsParser = new OptionsParser(TestJaxb.class.getName());
+            optionsParser.parse(args);
+
+            int maxRequests = optionsParser.getRequestsCount();
+            int maxThreads = optionsParser.getThreadsCount();
 
             File inputFile = new File("test.xml");
             System.out.println("running " + maxRequests + " requests with " + maxThreads + " threads to test JAXBContext overhead");
@@ -251,6 +259,54 @@ public class TestJaxb {
 
         public void setMessage(String message) {
             this.message = message;
+        }
+    }
+
+    public static class OptionsParser {
+
+        private String className = this.getClass().getName();
+        private int threadsCount = 100;
+        private int requestsCount = 2000;
+
+        private Options options = new Options();
+
+        public OptionsParser(String className) {
+
+            options.addOption("h", "help", false, "show this help message.");
+            options.addOption("t", "threads", true, "total threads (default 100).");
+            options.addOption("r", "requests", true, "total requests (default 2000).");
+
+            this.className = className;
+        }
+
+        public int getThreadsCount() { return threadsCount; }
+        public int getRequestsCount() { return requestsCount; }
+
+        public void parse(String[] args) {
+            try {
+                CommandLine cmd = new DefaultParser().parse(options, args);
+
+                if (cmd.hasOption('h'))
+                    help();
+
+                if (cmd.hasOption('r')) {
+                    this.requestsCount =  Integer.parseInt(cmd.getOptionValue('r'));
+                }
+
+                if (cmd.hasOption('t')) {
+                    this.threadsCount =  Integer.parseInt(cmd.getOptionValue("threads"));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                help();
+            }
+        }
+
+        private void help() {
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp(className, options);
+            System.exit(0);
         }
     }
 }
