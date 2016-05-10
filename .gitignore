@@ -1,4 +1,5 @@
 .idea
 .gitignore
+target
 testjaxb.iml
 
