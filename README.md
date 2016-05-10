@@ -1,6 +1,6 @@
-JABXContext
-===========
-A simple test to understand the overhead of JABXContext
+JAXBContext Singleton Performance
+=================================
+A simple test to understand the overhead of JAXBContext
 
 ## Build
 ```
