@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AuthenticateUserReqMessage>
+        <channelPartnerID>testChannel</channelPartnerID>
+        <contactID>4004590</contactID>
+        <cpCustomerID>0160429233334175</cpCustomerID>
+        <firstName>Foo</firstName>
+        <lastName>Bar</lastName>
+        <message>User Logged in successfully</message>
+        <sessionToken>eCgY-leuL-MVZ6-radN-cEvy-vTBu-P2</sessionToken>
+        <spAccountID>0160429233334175</spAccountID>
+        <status>SUCCESS</status>
+        <tokenExpiryTime>1462865847455</tokenExpiryTime>
+</AuthenticateUserReqMessage>
