@@ -36,10 +36,10 @@ public class TestJaxb {
             System.out.println("total time: " + String.format("%05d", singletonElapsedTime) + " ms (using global instance, singleton)");
 
             if (singletonElapsedTime < nonSingletonElapsedTime) {
-                System.out.println("++ summary: singleton is " + nonSingletonElapsedTime / singletonElapsedTime + " times faster than non singleton");
+                System.out.println("\n++ SUMMARY: singleton is " + nonSingletonElapsedTime / singletonElapsedTime + " TIMES *FASTER* than non singleton\n");
             }
             else {
-                System.out.println("++ summary: singleton is " + nonSingletonElapsedTime / singletonElapsedTime + " times slower than non singleton");
+                System.out.println("\n++ SUMMARY: singleton is " + nonSingletonElapsedTime / singletonElapsedTime + " TIMES *SLOWER* than non singleton\n");
             }
 
         } catch (Exception e) {
@@ -100,8 +100,7 @@ public class TestJaxb {
 
         public void run() {
             try {
-                Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                AuthenticateUserReqMessage authResponse = (AuthenticateUserReqMessage) jaxbUnmarshaller.unmarshal(inputFile);
+                AuthenticateUserReqMessage authResponse = (AuthenticateUserReqMessage) (jaxbContext.createUnmarshaller()).unmarshal(inputFile);
                 if (!authResponse.getChannelPartnerID().equals("testChannel")) {
                     System.out.println("[" + threadId + "] failed in SingletonRunner, response : " + authResponse.getChannelPartnerID());
                 }
@@ -125,8 +124,7 @@ public class TestJaxb {
         public void run() {
             try {
                 JAXBContext jaxbContext = JAXBContext.newInstance(AuthenticateUserReqMessage.class);
-                Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-                AuthenticateUserReqMessage authResponse = (AuthenticateUserReqMessage) jaxbUnmarshaller.unmarshal(inputFile);
+                AuthenticateUserReqMessage authResponse = (AuthenticateUserReqMessage) (jaxbContext.createUnmarshaller()).unmarshal(inputFile);
                 if (!authResponse.getChannelPartnerID().equals("testChannel")) {
                     System.out.println("[" + threadId + "] failed in RunnerNonSingleton, response : " + authResponse.getChannelPartnerID());
                 }
